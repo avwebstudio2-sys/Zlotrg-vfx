@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZlotrgVFX — Video Editing for Creators</title>
+  <meta name="description" content="ZlotrgVFX — freelance video editor for content creators. Short-form, YouTube, podcasts and motion graphics that keep viewers watching." />
+  <meta name="theme-color" content="#050507" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <meta property="og:title" content="ZlotrgVFX — Video Editing for Creators" />
+  <meta property="og:description" content="Edits that keep viewers watching. Short-form, YouTube, podcasts & motion graphics." />
+  <meta property="og:image" content="assets/logo-full.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="is-loading">
+
+  <!-- Preloader -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <img src="assets/logo.png" alt="" class="loader__logo" />
+      <div class="loader__bar"><span></span></div>
+      <div class="loader__count"><span id="loaderCount">0</span>%</div>
+    </div>
+  </div>
+
+  <!-- Page transition curtain -->
+  <div class="curtain" aria-hidden="true"></div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor__ring"><span class="cursor__label"></span></div>
+    <div class="cursor__dot"></div>
+  </div>
+
+  <!-- Background glow -->
+  <div class="bg-glow" aria-hidden="true">
+    <span class="bg-glow__a"></span>
+    <span class="bg-glow__b"></span>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <header class="nav">
+    <a href="#top" class="nav__logo" data-cursor="hover" aria-label="ZlotrgVFX home">
+      <img src="assets/logo-sm.png" alt="ZlotrgVFX logo" />
+      <span>zlotrg<b>vfx</b></span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#work" data-cursor="hover">Work</a>
+      <a href="#services" data-cursor="hover">Services</a>
+      <a href="#process" data-cursor="hover">Process</a>
+      <a href="#results" data-cursor="hover">Results</a>
+    </nav>
+    <a href="#contact" class="btn btn--small magnetic" data-cursor="hover">Let's talk</a>
+    <button class="nav__burger" aria-label="Open menu" aria-expanded="false" data-cursor="hover">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-menu" aria-hidden="true">
+    <a href="#work">Work</a>
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#results">Results</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero__badge reveal">
+        <span class="pulse"></span> Available for new projects
+      </div>
+      <h1 class="hero__title">
+        <span class="line"><span>Edits that keep</span></span>
+        <span class="line"><span>viewers <em class="grad">watching.</em></span></span>
+      </h1>
+      <p class="hero__sub reveal">
+        I help creators, brands and channels turn raw footage into scroll-stopping
+        content — with sharp pacing, clean motion graphics and storytelling built for retention.
+      </p>
+      <div class="hero__cta reveal">
+        <a href="#contact" class="btn magnetic" data-cursor="hover">
+          <span>Start a project</span>
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#work" class="btn btn--ghost magnetic" data-cursor="hover">View work</a>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <i></i>
+      </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>YouTube</span><i>✦</i><span>Reels</span><i>✦</i><span>TikTok</span><i>✦</i><span>Podcasts</span><i>✦</i><span>Brands</span><i>✦</i><span>Gaming</span><i>✦</i><span>Education</span><i>✦</i><span>Lifestyle</span><i>✦</i>
+        <span>YouTube</span><i>✦</i><span>Reels</span><i>✦</i><span>TikTok</span><i>✦</i><span>Podcasts</span><i>✦</i><span>Brands</span><i>✦</i><span>Gaming</span><i>✦</i><span>Education</span><i>✦</i><span>Lifestyle</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- Showreel -->
+    <section class="showreel">
+      <!-- Set data-video to your showreel URL (YouTube/Vimeo embed link or .mp4 file) -->
+      <div class="showreel__frame" data-cursor="play" data-video="">
+        <div class="showreel__bg"></div>
+        <img src="assets/logo.png" alt="" class="showreel__logo" />
+        <div class="showreel__play">
+          <svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+        </div>
+        <div class="showreel__caption">
+          <span>Showreel</span>
+          <span>2026</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work -->
+    <section class="section" id="work">
+      <div class="section__head">
+        <span class="eyebrow reveal">01 — Selected work</span>
+        <h2 class="section__title reveal">Content that <em class="grad">performs</em>.</h2>
+      </div>
+
+      <div class="filters reveal" role="tablist">
+        <button class="filter is-active" data-filter="all" data-cursor="hover">All</button>
+        <button class="filter" data-filter="short" data-cursor="hover">Short-form</button>
+        <button class="filter" data-filter="long" data-cursor="hover">Long-form</button>
+      </div>
+
+      <!-- Replace data-video with your own links (YouTube embed URL, Vimeo or .mp4)
+           and optionally add a thumbnail via style="--thumb:url('assets/your-thumb.jpg')" -->
+      <div class="work-grid">
+        <article class="work-card work-card--tall reveal" data-type="short" data-cursor="play" data-video="" style="--h1:265;--h2:225">
+          <div class="work-card__media"><span class="work-card__tag">Reel</span></div>
+          <div class="work-card__info"><h3>Talking-head Reel</h3><p>Captions · Zooms · SFX</p></div>
+        </article>
+        <article class="work-card work-card--wide reveal" data-type="long" data-cursor="play" data-video="" style="--h1:225;--h2:275">
+          <div class="work-card__media"><span class="work-card__tag">YouTube</span></div>
+          <div class="work-card__info"><h3>YouTube Documentary</h3><p>Storytelling · Color · Sound design</p></div>
+        </article>
+        <article class="work-card work-card--wide reveal" data-type="long" data-cursor="play" data-video="" style="--h1:250;--h2:290">
+          <div class="work-card__media"><span class="work-card__tag">Podcast</span></div>
+          <div class="work-card__info"><h3>Podcast Episode</h3><p>Multicam · Clips · Subtitles</p></div>
+        </article>
+        <article class="work-card work-card--tall reveal" data-type="short" data-cursor="play" data-video="" style="--h1:285;--h2:240">
+          <div class="work-card__media"><span class="work-card__tag">TikTok</span></div>
+          <div class="work-card__info"><h3>Product Ad</h3><p>Motion graphics · Hooks</p></div>
+        </article>
+        <article class="work-card work-card--tall reveal" data-type="short" data-cursor="play" data-video="" style="--h1:230;--h2:270">
+          <div class="work-card__media"><span class="work-card__tag">Shorts</span></div>
+          <div class="work-card__info"><h3>Gaming Highlights</h3><p>VFX · Transitions · Beat sync</p></div>
+        </article>
+        <article class="work-card work-card--tall reveal" data-type="short" data-cursor="play" data-video="" style="--h1:270;--h2:220">
+          <div class="work-card__media"><span class="work-card__tag">Reel</span></div>
+          <div class="work-card__info"><h3>Lifestyle Vlog Cut</h3><p>Pacing · Color grade</p></div>
+        </article>
+        <article class="work-card work-card--tall reveal" data-type="short" data-cursor="play" data-video="" style="--h1:240;--h2:290">
+          <div class="work-card__media"><span class="work-card__tag">Shorts</span></div>
+          <div class="work-card__info"><h3>Educational Short</h3><p>Animated captions · B-roll</p></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section" id="services">
+      <div class="section__head">
+        <span class="eyebrow reveal">02 — Services</span>
+        <h2 class="section__title reveal">Everything your content <em class="grad">needs</em>.</h2>
+      </div>
+
+      <div class="services">
+        <div class="service reveal" data-cursor="hover">
+          <span class="service__num">01</span>
+          <div class="service__body">
+            <h3>Short-form content</h3>
+            <p>Reels, TikToks and Shorts with strong hooks, dynamic captions, zooms and sound design engineered to stop the scroll.</p>
+          </div>
+          <span class="service__arrow">↗</span>
+        </div>
+        <div class="service reveal" data-cursor="hover">
+          <span class="service__num">02</span>
+          <div class="service__body">
+            <h3>YouTube long-form</h3>
+            <p>Story-driven edits with tight pacing, b-roll, graphics and retention-focused structure from intro to outro.</p>
+          </div>
+          <span class="service__arrow">↗</span>
+        </div>
+        <div class="service reveal" data-cursor="hover">
+          <span class="service__num">03</span>
+          <div class="service__body">
+            <h3>Podcasts &amp; clips</h3>
+            <p>Full multicam episodes plus a batch of viral-ready clips to keep your channels fed every week.</p>
+          </div>
+          <span class="service__arrow">↗</span>
+        </div>
+        <div class="service reveal" data-cursor="hover">
+          <span class="service__num">04</span>
+          <div class="service__body">
+            <h3>Motion graphics &amp; VFX</h3>
+            <p>Custom titles, animated text, transitions and visual effects that give your brand a premium look.</p>
+          </div>
+          <span class="service__arrow">↗</span>
+        </div>
+        <div class="service reveal" data-cursor="hover">
+          <span class="service__num">05</span>
+          <div class="service__body">
+            <h3>Color &amp; sound</h3>
+            <p>Cinematic color grading, clean audio and sound effects that make every frame feel polished.</p>
+          </div>
+          <span class="service__arrow">↗</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section class="section" id="process">
+      <div class="section__head">
+        <span class="eyebrow reveal">03 — Process</span>
+        <h2 class="section__title reveal">Simple. Fast. <em class="grad">Stress-free</em>.</h2>
+      </div>
+
+      <div class="process">
+        <div class="step reveal">
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <span class="step__num">Step 01</span>
+          <h3>Quick chat</h3>
+          <p>Message me on WhatsApp — we talk about your content, style and goals.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          </div>
+          <span class="step__num">Step 02</span>
+          <h3>Send footage</h3>
+          <p>Upload your raw clips via Google Drive, Dropbox or WeTransfer. That's it.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          </div>
+          <span class="step__num">Step 03</span>
+          <h3>I edit</h3>
+          <p>You get a first draft fast, with every detail crafted for engagement.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <span class="step__num">Step 04</span>
+          <h3>Revise &amp; post</h3>
+          <p>We fine-tune until it's perfect. You publish and watch the numbers grow.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="section" id="results">
+      <div class="section__head">
+        <span class="eyebrow reveal">04 — Results</span>
+        <h2 class="section__title reveal">Numbers that <em class="grad">speak</em>.</h2>
+      </div>
+
+      <!-- Update the numbers below with your real stats -->
+      <div class="stats">
+        <div class="stat reveal">
+          <div class="stat__value"><span class="count" data-to="50">0</span>M+</div>
+          <p>Views generated</p>
+        </div>
+        <div class="stat reveal">
+          <div class="stat__value"><span class="count" data-to="500">0</span>+</div>
+          <p>Videos delivered</p>
+        </div>
+        <div class="stat reveal">
+          <div class="stat__value"><span class="count" data-to="40">0</span>+</div>
+          <p>Happy creators</p>
+        </div>
+        <div class="stat reveal">
+          <div class="stat__value"><span class="count" data-to="48">0</span>h</div>
+          <p>Average turnaround</p>
+        </div>
+      </div>
+
+      <!-- Placeholder testimonials — replace with real client feedback -->
+      <div class="testimonials" aria-label="Testimonials">
+        <div class="testimonials__track">
+          <figure class="quote">
+            <blockquote>“My retention went up on every single video. Fast, reliable and always on point.”</blockquote>
+            <figcaption><span class="avatar">A</span><div><b>Client name</b><small>YouTube creator</small></div></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“The edits feel premium. My Reels finally look the way I imagined them.”</blockquote>
+            <figcaption><span class="avatar">M</span><div><b>Client name</b><small>Instagram creator</small></div></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“Turned our podcast into a clip machine. Communication is effortless.”</blockquote>
+            <figcaption><span class="avatar">J</span><div><b>Client name</b><small>Podcast host</small></div></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“Hooks, captions, sound — everything just hits. Highly recommend.”</blockquote>
+            <figcaption><span class="avatar">S</span><div><b>Client name</b><small>Brand owner</small></div></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <div class="contact__glow"></div>
+      <span class="eyebrow reveal">05 — Contact</span>
+      <h2 class="contact__title">
+        <span class="line"><span>Let's make your</span></span>
+        <span class="line"><span>next video <em class="grad">hit.</em></span></span>
+      </h2>
+      <p class="contact__sub reveal">The fastest way to reach me is WhatsApp. Usually replying within a few hours.</p>
+
+      <a href="#" class="wa-btn magnetic js-whatsapp reveal" target="_blank" rel="noopener" data-cursor="hover">
+        <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.7 6.4L3 29l6.8-1.8c1.8 1 3.9 1.5 6.2 1.5 7.2 0 13-5.8 13-13S23.2 3 16 3zm0 23.6c-2 0-3.9-.5-5.5-1.5l-.4-.2-4 1.1 1.1-3.9-.3-.4C5.8 20 5.3 18 5.3 16 5.3 10.1 10.1 5.3 16 5.3S26.7 10.1 26.7 16 21.9 26.6 16 26.6zm5.9-8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></svg>
+        <span>Chat on WhatsApp</span>
+      </a>
+
+      <div class="contact__alt reveal">
+        <span class="contact__or">or reach me on</span>
+        <div class="contact__links">
+          <a href="#" class="pill magnetic js-instagram" target="_blank" rel="noopener" data-cursor="hover">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+            <span class="js-instagram-label">Instagram</span>
+          </a>
+          <a href="#" class="pill magnetic js-email" data-cursor="hover">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+            <span class="js-email-label">Email</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__big" aria-hidden="true">zlotrgvfx</div>
+    <div class="footer__row">
+      <span>© <span id="year"></span> ZlotrgVFX. All rights reserved.</span>
+      <a href="#top" class="footer__top" data-cursor="hover">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp widget -->
+  <a href="#" class="wa-float js-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" data-cursor="hover">
+    <span class="wa-float__tip">Need an editor? Let's chat 👋</span>
+    <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><path fill="currentColor" d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.7 6.4L3 29l6.8-1.8c1.8 1 3.9 1.5 6.2 1.5 7.2 0 13-5.8 13-13S23.2 3 16 3zm0 23.6c-2 0-3.9-.5-5.5-1.5l-.4-.2-4 1.1 1.1-3.9-.3-.4C5.8 20 5.3 18 5.3 16 5.3 10.1 10.1 5.3 16 5.3S26.7 10.1 26.7 16 21.9 26.6 16 26.6zm5.9-8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></svg>
+  </a>
+
+  <!-- Video lightbox -->
+  <div class="lightbox" aria-hidden="true">
+    <button class="lightbox__close" aria-label="Close" data-cursor="hover">✕</button>
+    <div class="lightbox__frame"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
