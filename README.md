@@ -1,8 +1,17 @@
-# ZlotrgVFX — portfolio website
+# zlotrgvfx
 
-Static one-page site (HTML/CSS/JS, no build step). Open `index.html` or deploy the folder to any static host (GitHub Pages, Netlify, Vercel).
+Portfolio website for freelance video editor **zlotrgvfx**. Static HTML/CSS/JS, no build step.
 
-## Customize
-- **Contact info** — edit `CONFIG` at the top of `script.js` (WhatsApp number, Instagram handle, email).
-- **Videos** — set `data-video` on the showreel and each `.work-card` in `index.html` (YouTube, Vimeo or `.mp4` link). Add a thumbnail with `style="--thumb:url('assets/thumb.jpg')"`.
-- **Stats & testimonials** — placeholder values in the Results section of `index.html`; replace with real ones.
+## Run locally
+
+```
+python -m http.server 5500
+```
+
+## Edit
+
+- Contact details (WhatsApp, Instagram, email): `CONFIG` at the top of `js/main.js`
+- Portfolio videos: put files in `assets/work/` and set `data-video="assets/work/file.mp4"` on each `.card` in `index.html`
+- Hero scroll animation: frame sequence in `assets/frames/` (`lg` desktop, `sm` mobile)
+
+Website by [A&V Web Studio](https://avstudio.site)
