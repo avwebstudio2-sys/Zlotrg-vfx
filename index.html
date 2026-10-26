@@ -9,12 +9,11 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta property="og:title" content="ZLOTRG VFX | Video Editor for Creators">
   <meta property="og:description" content="Edits that keep people watching. First edit free, 24–48h turnaround.">
-  <meta property="og:image" content="assets/img/hero-poster.jpg">
+  <meta property="og:image" content="assets/img/logo.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="assets/img/hero-poster.jpg">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="is-loading">
@@ -68,34 +67,63 @@
 
   <main id="main">
 
-    <!-- HERO: scroll-scrubbed tunnel -->
+    <!-- HERO: planet-rim sky + scaled 1672x941 design stage -->
     <section class="hero" id="top" aria-label="Intro">
-      <div class="hero__sticky">
-        <canvas class="hero__canvas" aria-hidden="true"></canvas>
-        <img class="hero__poster" src="assets/img/hero-poster.jpg" alt="" aria-hidden="true">
-        <div class="hero__vignette" aria-hidden="true"></div>
+      <!-- Sky layers: static canvases; only the video moves. Blend layers sit outside the stage so they screen onto the stars. -->
+      <canvas class="sky__stars" aria-hidden="true"></canvas>
+      <canvas class="sky__rim" aria-hidden="true"></canvas>
+      <video class="sky__video" muted loop playsinline preload="none" aria-hidden="true"
+        data-src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e859f229-8ebd-43fb-a5a0-58006ba75327.mp4"></video>
+      <img class="sky__dashglow" src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/e0e14572-12e1-4c08-b471-a21521844945.png" alt="" aria-hidden="true">
 
-        <div class="hero__content">
-          <p class="eyebrow hero__eyebrow"><span class="dot"></span> Video editor for creators</p>
-
+      <div class="stage">
+        <div class="hero__copy">
+          <p class="hero__pill"><span class="dot"></span> Video editor for creators · First edit free</p>
           <h1 class="hero__title">
-            <span class="hero__line" data-phase="0"><span>Free up</span> <span>your time<i>.</i></span></span>
-            <span class="hero__line" data-phase="1"><span>Level up</span> <span><span class="hero__accent">your content</span><i>.</i></span></span>
-            <span class="hero__line" data-phase="2"><span>Turn views</span> <span>into clients<i>.</i></span></span>
+            <span>Edits that</span> <span>keep people</span> <span class="hero__accent">watching.</span>
           </h1>
-
-          <div class="hero__bottom">
-            <p class="hero__sub">I edit for YouTubers, streamers, podcasters, coaches and brands, so you can focus on creating while your videos keep people watching.</p>
-            <div class="hero__ctas">
-              <a href="#free-edit" class="btn btn--light" data-cursor="hover">Get my free edit <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-              <a href="#work" class="btn btn--ghost" data-cursor="hover">See my work</a>
-            </div>
+          <p class="hero__sub">I edit for YouTubers, streamers, podcasters, coaches and brands.</p>
+          <div class="hero__ctas">
+            <a href="#free-edit" class="btn btn--light" data-cursor="hover">Get my free edit <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a href="#work" class="btn btn--ghost" data-cursor="hover">See my work</a>
           </div>
         </div>
 
-        <div class="hero__scroll" aria-hidden="true">
-          <span>Scroll</span>
-          <div class="hero__progress"><span></span></div>
+        <!-- Editing dashboard mockup -->
+        <div class="dash" aria-hidden="true">
+          <div class="dash__top">
+            <span class="dash__dots"><i></i><i></i><i></i></span>
+            <span class="dash__file">creator_reel_v3 <em>· autosaved</em></span>
+            <span class="dash__export">Export 9:16</span>
+          </div>
+          <div class="dash__body">
+            <ul class="dash__side">
+              <li class="is-on"><b></b>Cut</li>
+              <li><b></b>Captions</li>
+              <li><b></b>Color</li>
+              <li><b></b>Sound</li>
+              <li><b></b>Graphics</li>
+            </ul>
+            <div class="dash__main">
+              <div class="dash__viewer">
+                <div class="dash__frame dash__frame--wide"><span>16:9</span></div>
+                <div class="dash__frame dash__frame--tall"><span>9:16</span><p>this changed <b>everything</b></p></div>
+                <div class="dash__frame dash__frame--sq"><span>1:1</span></div>
+              </div>
+              <div class="dash__timeline">
+                <div class="dash__ruler"><span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span><span>00:20</span><span>00:25</span></div>
+                <div class="dash__track dash__track--v"><i style="--w:18%"></i><i style="--w:12%"></i><i style="--w:26%"></i><i style="--w:9%"></i><i style="--w:21%"></i></div>
+                <div class="dash__track dash__track--c"><i style="--w:10%"></i><i style="--w:14%"></i><i style="--w:8%"></i><i style="--w:16%"></i><i style="--w:11%"></i><i style="--w:13%"></i></div>
+                <div class="dash__track dash__track--a"></div>
+                <span class="dash__playhead"></span>
+              </div>
+            </div>
+            <div class="dash__stats">
+              <div><small>Hook</small><b>0:03</b></div>
+              <div><small>Avg. retention</small><b>72%</b><span class="dash__bar"><i style="--v:72%"></i></span></div>
+              <div><small>Delivery</small><b>24–48h</b></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -112,10 +140,10 @@
         </ul>
       </div>
       <div class="marquee" aria-hidden="true">
-        <div class="marquee__track">
-          <span>Short-form editing</span><i></i><span>Reels &amp; TikTok</span><i></i><span>YouTube long-form</span><i></i><span>Script writing</span><i></i><span>Sound design</span><i></i><span>Color grading</span><i></i><span>Captions</span><i></i><span>Motion graphics</span><i></i><span>Podcast clips</span><i></i>
-          <span>Short-form editing</span><i></i><span>Reels &amp; TikTok</span><i></i><span>YouTube long-form</span><i></i><span>Script writing</span><i></i><span>Sound design</span><i></i><span>Color grading</span><i></i><span>Captions</span><i></i><span>Motion graphics</span><i></i><span>Podcast clips</span><i></i>
-        </div>
+      <div class="marquee__track">
+        <span>Short-form editing</span><i></i><span>Reels &amp; TikTok</span><i></i><span>YouTube long-form</span><i></i><span>Script writing</span><i></i><span>Sound design</span><i></i><span>Color grading</span><i></i><span>Captions</span><i></i><span>Motion graphics</span><i></i><span>Podcast clips</span><i></i>
+        <span>Short-form editing</span><i></i><span>Reels &amp; TikTok</span><i></i><span>YouTube long-form</span><i></i><span>Script writing</span><i></i><span>Sound design</span><i></i><span>Color grading</span><i></i><span>Captions</span><i></i><span>Motion graphics</span><i></i><span>Podcast clips</span><i></i>
+      </div>
       </div>
     </section>
 

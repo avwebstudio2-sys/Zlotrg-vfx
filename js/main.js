@@ -8,11 +8,8 @@ const CONFIG = {
   email: "hello@zlotrgvfx.com",
 };
 
-const FRAMES = { count: 120, lg: "assets/frames/lg/f", sm: "assets/frames/sm/f", ext: ".webp" };
-
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-const isMobile = () => window.innerWidth < 768 || window.innerHeight > window.innerWidth;
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,105 +38,139 @@ function setupLenis() {
   gsap.ticker.lagSmoothing(0);
 }
 
-/* ---------- Hero frame sequence ---------- */
+/* ---------- Hero sky + stage ----------
+   Static sky: stars and the planet-rim fallback are painted once per resize.
+   Nothing in the sky is animated in code; only the glow video moves it. */
+const STAGE = { w: 1672, h: 941, skyH: 717 };
+// Planet geometry in design px, matched to the glow video (rim bottom at y≈212, centre x≈850)
+const PLANET = { cx: 850, cy: -584, r: 796 };
+const stackedMQ = window.matchMedia("(max-width: 899px), (orientation: portrait)");
+
 const hero = {
   el: document.querySelector(".hero"),
-  canvas: document.querySelector(".hero__canvas"),
-  frames: [],
-  current: 0,
-  base: "",
+  stars: document.querySelector(".sky__stars"),
+  rim: document.querySelector(".sky__rim"),
+  video: document.querySelector(".sky__video"),
 };
-hero.ctx = hero.canvas.getContext("2d");
 
-function frameSrc(i) {
-  return `${hero.base}${String(i + 1).padStart(3, "0")}${FRAMES.ext}`;
-}
-
-function loadFrame(i) {
-  return new Promise((resolve) => {
-    if (hero.frames[i]) return resolve();
-    const img = new Image();
-    img.decoding = "async";
-    img.onload = () => { hero.frames[i] = img; resolve(); };
-    img.onerror = () => resolve();
-    img.src = frameSrc(i);
-  });
-}
-
-function sizeCanvas() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-  hero.canvas.width = Math.round(window.innerWidth * dpr);
-  hero.canvas.height = Math.round(window.innerHeight * dpr);
-  drawFrame(hero.current, true);
-}
-
-function nearestLoaded(i) {
-  for (let d = 0; d < FRAMES.count; d++) {
-    if (hero.frames[i - d]) return hero.frames[i - d];
-    if (hero.frames[i + d]) return hero.frames[i + d];
+// Small polar colour table: angle from the rim's lowest point → colour (magenta centre, violet sides)
+const RIM_TABLE = (() => {
+  const stops = [[240, 171, 252], [217, 70, 239], [168, 85, 247], [124, 58, 237], [91, 33, 182]];
+  const n = 16, out = [];
+  for (let i = 0; i < n; i++) {
+    const t = (i / (n - 1)) * (stops.length - 1), k = Math.floor(t), f = t - k;
+    const a = stops[k], b = stops[Math.min(k + 1, stops.length - 1)];
+    out.push(a.map((v, j) => v + (b[j] - v) * f));
   }
-  return null;
+  return out;
+})();
+
+function paintRim(canvas, cssW, cssH, k, offX) {
+  const q = 0.5; // paint at half resolution; the browser smooths it up
+  const w = Math.max(1, Math.round(cssW * q)), h = Math.max(1, Math.round(cssH * q));
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  const img = ctx.createImageData(w, h);
+  const d = img.data;
+  const unit = 1 / (k * q); // design px per canvas px
+  for (let y = 0; y < h; y++) {
+    const dy = y * unit - PLANET.cy;
+    for (let x = 0; x < w; x++) {
+      const dx = (x / q - offX) / k - PLANET.cx;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const off = dist - PLANET.r; // <0 inside the planet, >0 in space
+      const ang = Math.abs(Math.atan2(dx, dy)); // 0 at the lowest point of the rim
+      if (ang > 1.5) continue;
+      const fade = Math.max(0, Math.cos(ang * 1.05)) ** 1.4;
+      let I;
+      if (off >= 0) I = 1.0 * Math.exp(-off / 9) + 0.35 * Math.exp(-off / 60);
+      else {
+        const streak = 0.55 + 0.45 * Math.sin(ang * 140 + dist * 0.045) * Math.sin(ang * 37 - dist * 0.02);
+        I = 1.1 * Math.exp(off / 7) + 0.32 * Math.exp(off / 140) * streak;
+      }
+      I *= fade;
+      const hot = Math.exp(-(off * off) / 40) * Math.exp(-ang * ang * 90); // white-hot point
+      const c = RIM_TABLE[Math.min(15, Math.floor((ang / 1.5) * 16))];
+      const i = (y * w + x) * 4;
+      d[i] = Math.min(255, c[0] * I + 255 * hot);
+      d[i + 1] = Math.min(255, c[1] * I + 245 * hot);
+      d[i + 2] = Math.min(255, c[2] * I + 255 * hot);
+      d[i + 3] = 255;
+    }
+  }
+  // black stays transparent under mix-blend-mode: screen
+  for (let i = 3; i < d.length; i += 4) if (!d[i]) { d[i - 3] = d[i - 2] = d[i - 1] = 0; d[i] = 255; }
+  ctx.putImageData(img, 0, 0);
 }
 
-let lastDrawn = null;
-function drawFrame(i, force) {
-  hero.current = i;
-  const img = nearestLoaded(i);
-  if (!img || (img === lastDrawn && !force)) return;
-  lastDrawn = img;
-  const { width: cw, height: ch } = hero.canvas;
-  const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-  const w = img.naturalWidth * s, h = img.naturalHeight * s;
-  hero.ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+function paintStars(canvas, cssW, cssH) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(cssW * dpr); canvas.height = Math.round(cssH * dpr);
+  const ctx = canvas.getContext("2d");
+  ctx.scale(dpr, dpr);
+  let seed = 7;
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  const count = Math.round((cssW * cssH) / 2600);
+  for (let i = 0; i < count; i++) {
+    const x = rnd() * cssW, y = rnd() * cssH, big = rnd() > 0.96;
+    const r = big ? 0.9 + rnd() * 0.7 : 0.35 + rnd() * 0.6;
+    ctx.globalAlpha = big ? 0.75 + rnd() * 0.25 : 0.15 + rnd() * 0.55;
+    ctx.fillStyle = "#fff";
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    if (big) {
+      ctx.globalAlpha = 0.12;
+      ctx.beginPath(); ctx.arc(x, y, r * 4, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  ctx.globalAlpha = 1;
 }
 
-/* Load every 4th frame first (fast first paint), report progress, then fill the rest. */
-async function preloadHero(onProgress) {
-  hero.base = isMobile() ? FRAMES.sm : FRAMES.lg;
-  const first = [];
-  for (let i = 0; i < FRAMES.count; i += 4) first.push(i);
-  let done = 0;
-  await Promise.all(first.map((i) => loadFrame(i).then(() => onProgress(++done / first.length))));
-  sizeCanvas();
-  hero.el.classList.add("is-ready");
-  // Background fill, a few at a time
-  const rest = [];
-  for (let i = 0; i < FRAMES.count; i++) if (i % 4) rest.push(i);
-  const pool = async () => { while (rest.length) { await loadFrame(rest.shift()); drawFrame(hero.current, true); } };
-  Promise.all([pool(), pool(), pool(), pool()]);
+function layoutHero() {
+  const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+  const stacked = stackedMQ.matches;
+  const el = hero.el;
+  if (stacked) {
+    el.style.removeProperty("--s"); el.style.removeProperty("--sl"); el.style.removeProperty("--st");
+    const rimH = hero.rim.clientHeight || 300;
+    const k = rimH / 420; // show ~420 design px of sky height, cropped to the screen width
+    paintRim(hero.rim, vw, rimH, k, vw / 2 - PLANET.cx * k);
+  } else {
+    const s = Math.min(vw / STAGE.w, vh / STAGE.h);
+    const sl = (vw - STAGE.w * s) / 2, st = (vh - STAGE.h * s) / 2;
+    el.style.setProperty("--s", s.toFixed(5));
+    el.style.setProperty("--sl", `${sl.toFixed(2)}px`);
+    el.style.setProperty("--st", `${st.toFixed(2)}px`);
+    paintRim(hero.rim, STAGE.w * s, STAGE.skyH * s, s, 0);
+  }
+  paintStars(hero.stars, el.clientWidth, el.clientHeight);
 }
 
-function setupHeroScroll() {
-  const lines = gsap.utils.toArray(".hero__line");
-  // wrap each line part's text so it can slide inside its mask
-  lines.forEach((line) => line.querySelectorAll(":scope > span").forEach((s) => {
-    s.innerHTML = `<span class="hl">${s.innerHTML}</span>`;
-    s.querySelector(".hl").style.display = "inline-block";
-  }));
-  const inner = lines.map((l) => l.querySelectorAll(".hl"));
-  gsap.set(inner[1], { yPercent: 130 });
-  gsap.set(inner[2], { yPercent: 130 });
+// Re-layout on size changes, including the scrollbar appearing once the loader unlocks scrolling
+let layoutT, layoutW = 0, layoutH = 0;
+function relayoutHero() {
+  const w = document.documentElement.clientWidth, h = window.innerHeight;
+  if (w === layoutW && h === layoutH) return;
+  clearTimeout(layoutT);
+  layoutT = setTimeout(() => { layoutW = w; layoutH = h; layoutHero(); }, 120);
+}
 
-  const state = { f: 0 };
-  const tl = gsap.timeline({
-    defaults: { ease: "none" },
-    scrollTrigger: {
-      trigger: hero.el,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 0.6,
-      onUpdate: (st) => gsap.set(".hero__progress span", { scaleY: st.progress }),
-    },
-  });
-  tl.to(state, { f: FRAMES.count - 1, duration: 1, onUpdate: () => drawFrame(Math.round(state.f)) }, 0)
-    .to(hero.canvas, { scale: 1.12, duration: 1 }, 0)
-    .to(inner[0], { yPercent: -130, stagger: 0.03, duration: 0.1 }, 0.22)
-    .to(inner[1], { yPercent: 0, stagger: 0.03, duration: 0.1 }, 0.3)
-    .to(inner[1], { yPercent: -130, stagger: 0.03, duration: 0.1 }, 0.55)
-    .to(inner[2], { yPercent: 0, stagger: 0.03, duration: 0.1 }, 0.63)
-    .to(".hero__eyebrow", { opacity: 0, y: -20, duration: 0.1 }, 0.15)
-    .to(".hero__vignette", { opacity: 0.7, duration: 0.3 }, 0.7)
-    .to(".hero__content", { opacity: 0, y: -60, duration: 0.12 }, 0.88);
+// Desktop only: load the glow video and fade it in when it can play
+function setupGlowVideo() {
+  const v = hero.video;
+  if (reduceMotion) return;
+  const sync = () => {
+    if (stackedMQ.matches) { v.pause(); return; }
+    if (!v.src) { v.src = v.dataset.src; v.preload = "auto"; }
+    v.play().catch(() => {});
+  };
+  v.addEventListener("playing", () => v.classList.add("is-ready"), { once: true });
+  stackedMQ.addEventListener("change", sync);
+  // pause while the hero is off screen
+  new IntersectionObserver(([e]) => {
+    if (!v.src || stackedMQ.matches) return;
+    e.isIntersecting ? v.play().catch(() => {}) : v.pause();
+  }).observe(hero.el);
+  sync();
 }
 
 /* ---------- Intro (after loader) ---------- */
@@ -152,10 +183,9 @@ function introAnimation() {
   tl.to(".loader__logo", { scale: 0.8, autoAlpha: 0, duration: 0.6, ease: "power2.in" })
     .to(".loader__bar, .loader__pct", { autoAlpha: 0, duration: 0.3 }, "<")
     .to(".loader", { yPercent: -100, duration: 1.1, ease: "expo.inOut" }, "-=0.1")
-    .from(".hero__canvas", { scale: 1.25, duration: 1.8 }, "-=0.9")
-    .from(".hero__line[data-phase='0'] .hl", { yPercent: 130, stagger: 0.08, duration: 1.3 }, "-=1.5")
-    .from(".hero__eyebrow, .hero__sub, .hero__ctas > *, .hero__scroll", { y: 30, autoAlpha: 0, stagger: 0.08, duration: 1 }, "-=1.1")
-    .from(".nav", { yPercent: -100, autoAlpha: 0, duration: 1 }, "-=1.1");
+    .from(".hero__copy > *", { y: 40, autoAlpha: 0, stagger: 0.09, duration: 1.2 }, "-=0.6")
+    .from(".dash", { y: 120, autoAlpha: 0, duration: 1.4 }, "-=1.0")
+    .from(".nav", { yPercent: -100, autoAlpha: 0, duration: 1 }, "-=1.2");
   return tl;
 }
 
@@ -465,13 +495,12 @@ async function boot() {
   const bar = document.querySelector(".loader__bar span");
   const pct = document.querySelector(".loader__pct");
   const minTime = new Promise((r) => setTimeout(r, reduceMotion ? 0 : 900));
-  await Promise.all([
-    preloadHero((p) => { bar.style.transform = `scaleX(${p})`; pct.textContent = `${Math.round(p * 100)}%`; }),
-    document.fonts ? document.fonts.ready : null,
-    minTime,
-  ]);
+  layoutHero();
+  setupGlowVideo();
+  await Promise.all([document.fonts ? document.fonts.ready : null, minTime]);
+  bar.style.transform = "scaleX(1)";
+  pct.textContent = "100%";
 
-  if (!reduceMotion) setupHeroScroll();
   setupProcess(); // first: it changes page height that later triggers depend on
   setupSplitHeadings();
   setupReveals();
@@ -490,10 +519,10 @@ async function boot() {
     ScrollTrigger.refresh();
   });
   // let the page scroll as soon as the loader starts lifting
-  setTimeout(() => { document.body.classList.remove("is-loading"); lenis && lenis.start(); }, reduceMotion ? 0 : 900);
+  setTimeout(() => { document.body.classList.remove("is-loading"); lenis && lenis.start(); relayoutHero(); }, reduceMotion ? 0 : 900);
 
-  let rT;
-  window.addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(sizeCanvas, 150); });
+  new ResizeObserver(relayoutHero).observe(hero.el);
+  window.addEventListener("resize", relayoutHero);
 }
 
 boot();
