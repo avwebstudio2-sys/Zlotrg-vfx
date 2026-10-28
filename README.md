@@ -17,7 +17,7 @@ python -m http.server 5500
 ## SEO
 
 - Domain: `https://zlotrgvfx.site/` is used in the canonical, Open Graph/Twitter tags, JSON-LD (`index.html`), `robots.txt` and `sitemap.xml`. Change all of them together if the domain changes.
-- Social preview image: `assets/img/og-image.jpg` (1200x630).
+- Social preview image: `assets/img/og-hero.jpg` (1200x630).
 - Structured data: Organization, WebSite, WebPage, Service and one VideoObject per portfolio video. When you add a project, add its VideoObject and a `<video:video>` entry in `sitemap.xml`.
 - `vercel.json` sets cache headers for `/assets/*` (ignored by other hosts). `404.html` is the not-found page.
 
