@@ -45,8 +45,7 @@
     </a>
     <nav class="nav__links" aria-label="Primary">
       <a href="#work" data-cursor="hover">Work</a>
-      <a href="#process" data-cursor="hover">Process</a>
-      <a href="#services" data-cursor="hover">Services</a>
+      <a href="#results" data-cursor="hover">Results</a>
       <a href="#contact" data-cursor="hover">Contact</a>
     </nav>
     <a href="#free-edit" class="btn btn--sm btn--light nav__cta" data-cursor="hover">Free edit</a>
@@ -58,8 +57,7 @@
   <div class="mobile-menu" id="mobile-menu" hidden>
     <nav aria-label="Mobile">
       <a href="#work">Work</a>
-      <a href="#process">Process</a>
-      <a href="#services">Services</a>
+      <a href="#results">Results</a>
       <a href="#contact">Contact</a>
       <a href="#free-edit" class="btn btn--light">Get my free edit</a>
     </nav>
@@ -128,7 +126,7 @@
       </div>
     </section>
 
-    <!-- Intro + marquee -->
+    <!-- Intro -->
     <section class="intro" aria-label="What I do">
       <div class="container">
         <p class="intro__text reveal-words">Save <strong>30+ hours a month</strong> and turn attention into an audience that sticks around.</p>
@@ -138,12 +136,6 @@
           <li>No contracts</li>
           <li>24–48h turnaround</li>
         </ul>
-      </div>
-      <div class="marquee" aria-hidden="true">
-      <div class="marquee__track">
-        <span>Short-form editing</span><i></i><span>Reels &amp; TikTok</span><i></i><span>YouTube long-form</span><i></i><span>Script writing</span><i></i><span>Sound design</span><i></i><span>Color grading</span><i></i><span>Captions</span><i></i><span>Motion graphics</span><i></i><span>Podcast clips</span><i></i>
-        <span>Short-form editing</span><i></i><span>Reels &amp; TikTok</span><i></i><span>YouTube long-form</span><i></i><span>Script writing</span><i></i><span>Sound design</span><i></i><span>Color grading</span><i></i><span>Captions</span><i></i><span>Motion graphics</span><i></i><span>Podcast clips</span><i></i>
-      </div>
       </div>
     </section>
 
@@ -189,122 +181,33 @@
           <p class="section-head__sub reveal">Real projects for real creators. Hover a card to preview it, click to watch the whole thing.</p>
         </div>
 
-        <!-- Add your videos: set data-video="assets/work/your-file.mp4" (and optionally data-poster) on each card -->
+        <!-- To add a project: copy a card, set data-video (MP4, 720p, faststart) and data-poster -->
         <div class="work__grid">
-          <article class="card card--tall reveal" data-video="" data-poster="" tabindex="0" data-cursor="play">
+          <article class="card reveal" data-video="assets/work/raw-and-edited.mp4" data-poster="assets/work/raw-and-edited.jpg" tabindex="0" data-cursor="play" aria-label="Play: Raw vs. edited">
             <div class="card__media"><video muted loop playsinline preload="none"></video><div class="card__ph"></div></div>
             <div class="card__body">
-              <p class="card__meta">Talking head · Short-form</p>
-              <h3>Hook in 3 seconds</h3>
-              <p>A plain talking-head video turned into a fast, captioned short that holds attention from the first word to the loop.</p>
+              <p class="card__meta">Talking head · Before / after</p>
+              <h3>Raw vs. edited</h3>
+              <p>The same take side by side: a plain recording turned into a short with color, animated captions, sound design and tighter pacing.</p>
+              <ul class="tags"><li>Color</li><li>Captions</li><li>Sound design</li></ul>
+            </div>
+          </article>
+
+          <article class="card reveal" data-video="assets/work/short-form.mp4" data-poster="assets/work/short-form.jpg" tabindex="0" data-cursor="play" aria-label="Play: Short-form edit">
+            <div class="card__media"><video muted loop playsinline preload="none"></video><div class="card__ph"></div></div>
+            <div class="card__body">
+              <p class="card__meta">Creator · Reels / TikTok</p>
+              <h3>Short-form edit</h3>
+              <p>A talking-head short cut tight, with on-screen highlights and captions that keep the viewer watching to the last second.</p>
               <ul class="tags"><li>Hook</li><li>Captions</li><li>Pacing</li></ul>
             </div>
-          </article>
-
-          <article class="card card--wide reveal" data-video="" data-poster="" tabindex="0" data-cursor="play">
-            <div class="card__media"><video muted loop playsinline preload="none"></video><div class="card__ph"></div></div>
-            <div class="card__body">
-              <p class="card__meta">YouTube · Long-form</p>
-              <h3>Story-driven YouTube edit</h3>
-              <p>Structure, b-roll and sound design that give the topic room to breathe while the retention graph stays flat.</p>
-              <ul class="tags"><li>Structure</li><li>B-roll</li><li>Sound design</li></ul>
-            </div>
-          </article>
-
-          <article class="card card--tall reveal" data-video="" data-poster="" tabindex="0" data-cursor="play">
-            <div class="card__media"><video muted loop playsinline preload="none"></video><div class="card__ph"></div></div>
-            <div class="card__body">
-              <p class="card__meta">Podcast · Clips</p>
-              <h3>Podcast to viral clips</h3>
-              <p>One long episode cut into a batch of punchy vertical clips with animated captions and clean audio.</p>
-              <ul class="tags"><li>Repurposing</li><li>Captions</li><li>Audio</li></ul>
-            </div>
-          </article>
-
-          <article class="card card--wide reveal" data-video="" data-poster="" tabindex="0" data-cursor="play">
-            <div class="card__media"><video muted loop playsinline preload="none"></video><div class="card__ph"></div></div>
-            <div class="card__body">
-              <p class="card__meta">Brand · Promo</p>
-              <h3>Motion-graphics promo</h3>
-              <p>Text animation, a consistent grade and sound design built around one message that lands.</p>
-              <ul class="tags"><li>After Effects</li><li>Motion</li><li>Color</li></ul>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Process (horizontal on desktop) -->
-    <section class="process" id="process" aria-labelledby="process-title">
-      <div class="process__pin">
-        <div class="container process__head">
-          <p class="eyebrow">How it works</p>
-          <h2 id="process-title" class="split">What happens between your footage and your <span class="grad">post</span></h2>
-          <p class="section-head__sub reveal">The same sequence on every project. You only show up for the first and the last step.</p>
-        </div>
-        <div class="process__track">
-          <ol class="steps">
-            <li class="step"><span class="step__n">01</span><h3>Footage</h3><p>You send raw clips via Drive, Dropbox or WeTransfer. Phone footage is fine.</p></li>
-            <li class="step"><span class="step__n">02</span><h3>Script &amp; hook</h3><p>The first 3 seconds decide everything, so that is where we start.</p></li>
-            <li class="step"><span class="step__n">03</span><h3>Cuts &amp; pacing</h3><p>Nothing dead in the middle. Every cut has a reason.</p></li>
-            <li class="step"><span class="step__n">04</span><h3>Color</h3><p>One consistent look across every clip and every post.</p></li>
-            <li class="step"><span class="step__n">05</span><h3>Sound &amp; music</h3><p>Sound design and music that carry energy without stealing focus.</p></li>
-            <li class="step"><span class="step__n">06</span><h3>Captions &amp; graphics</h3><p>On-brand, readable and timed to the beat of your voice.</p></li>
-            <li class="step"><span class="step__n">07</span><h3>Final check</h3><p>Frame by frame, before it ever reaches your inbox.</p></li>
-            <li class="step step--accent"><span class="step__n">08</span><h3>Delivery</h3><p>Back to you in 24–48h, ready to post.</p></li>
-          </ol>
-        </div>
-        <div class="process__bar" aria-hidden="true"><span></span></div>
-      </div>
-    </section>
-
-    <!-- Services -->
-    <section class="services" id="services" aria-labelledby="services-title">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Services</p>
-          <h2 id="services-title" class="split">From script to <span class="grad">final cut</span></h2>
-          <p class="section-head__sub reveal">The full process in order. Take one service or all four.</p>
-        </div>
-        <div class="services__list">
-          <article class="service reveal" data-cursor="hover">
-            <span class="service__n">01</span>
-            <div class="service__main">
-              <h3>Script writing</h3>
-              <p>Hooks, structure and the words in between, so the video has a point before the camera is even on.</p>
-            </div>
-            <span class="service__note">Hook written for the first 3 seconds</span>
-          </article>
-          <article class="service reveal" data-cursor="hover">
-            <span class="service__n">02</span>
-            <div class="service__main">
-              <h3>Short-form editing</h3>
-              <p>Reels, TikToks and Shorts built around one idea. Tight cuts, punchy sound design and captions that carry the viewer to the last second.</p>
-            </div>
-            <span class="service__note">9:16, 1:1 or 16:9 in 24–48h</span>
-          </article>
-          <article class="service reveal" data-cursor="hover">
-            <span class="service__n">03</span>
-            <div class="service__main">
-              <h3>Long-form editing</h3>
-              <p>YouTube videos, podcasts and vlogs structured so the topic has room to breathe and the viewer still stays to the end.</p>
-            </div>
-            <span class="service__note">16:9, paced to hold attention</span>
-          </article>
-          <article class="service reveal" data-cursor="hover">
-            <span class="service__n">04</span>
-            <div class="service__main">
-              <h3>Color &amp; motion graphics</h3>
-              <p>Consistent color across every clip, clean text animation and graphics that support the story instead of fighting it.</p>
-            </div>
-            <span class="service__note">One look across the whole batch</span>
           </article>
         </div>
       </div>
     </section>
 
     <!-- Results -->
-    <section class="results" aria-labelledby="results-title">
+    <section class="results" id="results" aria-labelledby="results-title">
       <div class="container">
         <h2 id="results-title" class="results__statement reveal-words">I help you grow with content you actually post, <span class="muted">without losing your evenings to editing.</span></h2>
         <div class="stats">
@@ -345,14 +248,10 @@
           <svg class="wa-cta__arrow" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg>
         </a>
 
-        <div class="contact__alt reveal">
+        <div class="contact__alt contact__alt--single reveal">
           <a href="#" class="alt js-ig" target="_blank" rel="noopener" data-cursor="hover">
             <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
-            <span><small>Instagram</small><b class="js-ig-handle">@zlotrgvfx</b></span>
-          </a>
-          <a href="#" class="alt js-mail" data-cursor="hover">
-            <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-            <span><small>Email</small><b class="js-mail-addr">hello@zlotrgvfx.com</b></span>
+            <span><small>Instagram</small><b class="js-ig-handle">@zlotrg.vfx</b></span>
           </a>
         </div>
       </div>

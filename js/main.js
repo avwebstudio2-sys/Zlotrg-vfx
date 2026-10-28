@@ -3,15 +3,17 @@
    Edit CONFIG below with your real contact details.
    ========================================================== */
 const CONFIG = {
-  whatsapp: "38700000000",          // international format, digits only (no +, no spaces)
-  instagram: "zlotrgvfx",           // handle without @
-  email: "hello@zlotrgvfx.com",
+  whatsapp: "387603041784",         // +387 60 304 1784 — international format, digits only
+  instagram: "zlotrg.vfx",          // handle without @
 };
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 gsap.registerPlugin(ScrollTrigger);
+// Phones: the address bar showing/hiding resizes the viewport; don't re-measure every trigger for that.
+ScrollTrigger.config({ ignoreMobileResize: true });
+const isPhone = window.matchMedia("(max-width: 640px)").matches;
 
 /* ---------- Contact links ---------- */
 function setupContact() {
@@ -23,8 +25,6 @@ function setupContact() {
   });
   document.querySelectorAll(".js-ig").forEach((a) => (a.href = `https://instagram.com/${CONFIG.instagram}`));
   document.querySelectorAll(".js-ig-handle").forEach((el) => (el.textContent = `@${CONFIG.instagram}`));
-  document.querySelectorAll(".js-mail").forEach((a) => (a.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent("Video editing enquiry")}`));
-  document.querySelectorAll(".js-mail-addr").forEach((el) => (el.textContent = CONFIG.email));
   document.querySelectorAll(".js-year").forEach((el) => (el.textContent = new Date().getFullYear()));
 }
 
@@ -149,7 +149,8 @@ function layoutHero() {
 let layoutT, layoutW = 0, layoutH = 0;
 function relayoutHero() {
   const w = document.documentElement.clientWidth, h = window.innerHeight;
-  if (w === layoutW && h === layoutH) return;
+  // stacked layout doesn't depend on viewport height, so ignore the mobile address bar resizing it
+  if (w === layoutW && (h === layoutH || stackedMQ.matches)) return;
   clearTimeout(layoutT);
   layoutT = setTimeout(() => { layoutW = w; layoutH = h; layoutHero(); }, 120);
 }
@@ -227,7 +228,7 @@ function setupSplitHeadings() {
     splitWords(h);
     if (reduceMotion) return;
     gsap.from(h.querySelectorAll(".line > span"), {
-      yPercent: 110, rotate: 4, duration: 1.2, ease: "expo.out", stagger: 0.05,
+      yPercent: 110, rotate: isPhone ? 0 : 4, duration: isPhone ? 0.9 : 1.2, ease: "expo.out", stagger: 0.05,
       scrollTrigger: { trigger: h, start: "top 85%" },
     });
   });
@@ -245,11 +246,11 @@ function setupSplitHeadings() {
 /* ---------- Reveals ---------- */
 function setupReveals() {
   if (reduceMotion) return;
-  gsap.set(".reveal", { y: 50, autoAlpha: 0 });
+  gsap.set(".reveal", { y: isPhone ? 24 : 50, autoAlpha: 0 });
   ScrollTrigger.batch(".reveal", {
     start: "top 88%",
     once: true,
-    onEnter: (els) => gsap.to(els, { y: 0, autoAlpha: 1, duration: 1.1, ease: "expo.out", stagger: 0.1, overwrite: true }),
+    onEnter: (els) => gsap.to(els, { y: 0, autoAlpha: 1, duration: isPhone ? 0.8 : 1.1, ease: "expo.out", stagger: isPhone ? 0.06 : 0.1, overwrite: true }),
   });
 
   // Stagger the clip strips and phone in the transform section
@@ -257,7 +258,8 @@ function setupReveals() {
   gsap.from(".phone", { y: 60, rotate: 8, autoAlpha: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".transform", start: "top 65%" } });
   gsap.from(".transform__arrow path", { strokeDasharray: 120, strokeDashoffset: 120, duration: 1.2, ease: "power2.out", scrollTrigger: { trigger: ".transform", start: "top 60%" } });
 
-  // Subtle parallax on card media
+  // Subtle parallax on card media (desktop only: scrubbed transforms on every card cost too much on phones)
+  if (isPhone) return;
   gsap.utils.toArray(".card__ph").forEach((ph) => {
     gsap.fromTo(ph, { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: ph, start: "top bottom", end: "bottom top", scrub: true } });
   });
@@ -274,39 +276,6 @@ function setupCounters() {
       scrollTrigger: { trigger: el, start: "top 90%", once: true },
       onUpdate: () => (el.textContent = Math.round(o.v)),
     });
-  });
-}
-
-/* ---------- Process: horizontal scroll on desktop ---------- */
-function setupProcess() {
-  if (reduceMotion) return;
-  const mm = gsap.matchMedia();
-  mm.add("(min-width: 861px)", () => {
-    // Sticky stage instead of a GSAP pin: no pin-spacer reflow, no jitter with Lenis.
-    const section = document.querySelector(".process");
-    const track = document.querySelector(".process__track");
-    const steps = document.querySelector(".steps");
-    const distance = () => {
-      const pad = parseFloat(getComputedStyle(track).paddingLeft) * 2;
-      return Math.max(0, steps.scrollWidth - (track.clientWidth - pad));
-    };
-    const setHeight = () => (section.style.height = `${window.innerHeight + distance()}px`);
-    setHeight();
-    ScrollTrigger.addEventListener("refreshInit", setHeight);
-
-    gsap.timeline({
-      scrollTrigger: { trigger: section, start: "top top", end: "bottom bottom", scrub: 0.6, invalidateOnRefresh: true },
-    })
-      .to(steps, { x: () => -distance(), ease: "none" }, 0)
-      .to(".process__bar span", { scaleX: 1, ease: "none" }, 0);
-
-    return () => {
-      ScrollTrigger.removeEventListener("refreshInit", setHeight);
-      section.style.height = "";
-    };
-  });
-  mm.add("(max-width: 860px)", () => {
-    gsap.utils.toArray(".step").forEach((s) => gsap.from(s, { y: 40, autoAlpha: 0, duration: 0.9, ease: "expo.out", scrollTrigger: { trigger: s, start: "top 90%" } }));
   });
 }
 
@@ -501,7 +470,6 @@ async function boot() {
   bar.style.transform = "scaleX(1)";
   pct.textContent = "100%";
 
-  setupProcess(); // first: it changes page height that later triggers depend on
   setupSplitHeadings();
   setupReveals();
   setupCounters();
