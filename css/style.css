@@ -454,7 +454,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .footer .nav__brand { color: var(--fg); }
 .footer__credit { display: inline-flex; align-items: center; gap: 8px; color: var(--fg-muted); }
 .footer__credit a { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); font-weight: 700; transition: color 0.3s; }
-.footer__credit img { width: 26px; height: auto; filter: invert(1); opacity: 0.9; transition: opacity 0.3s, transform 0.5s var(--ease-out); }
+.footer__credit img { width: 26px; height: auto; filter: brightness(0) invert(1); opacity: 1; transition: opacity 0.3s, transform 0.5s var(--ease-out); }
 .footer__credit span { background: linear-gradient(var(--purple), var(--purple)) left bottom / 0 1px no-repeat; transition: background-size 0.4s var(--ease-out); }
 @media (hover: hover) { .footer__credit a:hover { color: #fff; } }
 @media (hover: hover) { .footer__credit a:hover img { opacity: 1; transform: rotate(-8deg) scale(1.08); } }
