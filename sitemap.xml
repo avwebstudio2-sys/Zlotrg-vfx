@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://zlotrgvfx.site/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <video:video>
+      <video:thumbnail_loc>https://zlotrgvfx.site/assets/work/raw-and-edited.jpg</video:thumbnail_loc>
+      <video:title>Raw vs. edited</video:title>
+      <video:description>The same take side by side: a plain recording turned into a short with color, animated captions, sound design and tighter pacing.</video:description>
+      <video:content_loc>https://zlotrgvfx.site/assets/work/raw-and-edited.mp4</video:content_loc>
+      <video:duration>28</video:duration>
+      <video:publication_date>2026-10-28</video:publication_date>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://zlotrgvfx.site/assets/work/short-form.jpg</video:thumbnail_loc>
+      <video:title>Short-form edit</video:title>
+      <video:description>A talking-head short cut tight, with on-screen highlights and captions that keep the viewer watching to the last second.</video:description>
+      <video:content_loc>https://zlotrgvfx.site/assets/work/short-form.mp4</video:content_loc>
+      <video:duration>39</video:duration>
+      <video:publication_date>2026-10-28</video:publication_date>
+    </video:video>
+  </url>
+</urlset>
