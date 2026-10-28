@@ -28,6 +28,17 @@ function setupContact() {
   document.querySelectorAll(".js-year").forEach((el) => (el.textContent = new Date().getFullYear()));
 }
 
+/* ---------- Tab title ----------
+   The full title stays in the HTML for search results; once the visitor scrolls, the tab shows just the brand. */
+function setupTabTitle() {
+  const onScroll = () => {
+    if (window.scrollY < 10) return;
+    document.title = "Zlotrgvfx";
+    window.removeEventListener("scroll", onScroll);
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+}
+
 /* ---------- Smooth scroll ---------- */
 let lenis = null;
 function setupLenis() {
@@ -611,6 +622,7 @@ function setupFloat() {
 /* ---------- Boot ---------- */
 async function boot() {
   setupContact();
+  setupTabTitle();
   setupLenis();
   lenis && lenis.stop();
   window.scrollTo(0, 0);
