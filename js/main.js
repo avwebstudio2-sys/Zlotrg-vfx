@@ -617,6 +617,11 @@ function setupFloat() {
     onEnter: () => btn.classList.add("is-visible"),
     onLeaveBack: () => btn.classList.remove("is-visible"),
   });
+  // step aside at the footer so it doesn't cover the credit line (the contact section has its own WhatsApp button)
+  ScrollTrigger.create({
+    trigger: ".footer", start: "top bottom",
+    onToggle: (st) => btn.classList.toggle("is-tucked", st.isActive),
+  });
 }
 
 /* ---------- Boot ---------- */

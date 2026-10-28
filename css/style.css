@@ -452,15 +452,15 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .footer { border-top: 1px solid var(--line); padding: 32px 0; color: var(--fg-dim); font-size: 14px; }
 .footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .footer .nav__brand { color: var(--fg); }
-.footer__credit { display: inline-flex; align-items: center; gap: 10px; }
-.footer__credit a { display: inline-flex; align-items: center; gap: 8px; color: var(--fg-muted); transition: color 0.3s; }
-.footer__credit img { width: 26px; height: auto; filter: invert(1); opacity: 0.7; transition: opacity 0.3s, transform 0.5s var(--ease-out); }
+.footer__credit { display: inline-flex; align-items: center; gap: 8px; color: var(--fg-muted); }
+.footer__credit a { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); font-weight: 700; transition: color 0.3s; }
+.footer__credit img { width: 26px; height: auto; filter: invert(1); opacity: 0.9; transition: opacity 0.3s, transform 0.5s var(--ease-out); }
 .footer__credit span { background: linear-gradient(var(--purple), var(--purple)) left bottom / 0 1px no-repeat; transition: background-size 0.4s var(--ease-out); }
-@media (hover: hover) { .footer__credit a:hover { color: var(--fg); } }
+@media (hover: hover) { .footer__credit a:hover { color: #fff; } }
 @media (hover: hover) { .footer__credit a:hover img { opacity: 1; transform: rotate(-8deg) scale(1.08); } }
 @media (hover: hover) { .footer__credit a:hover span { background-size: 100% 1px; } }
 @media (max-width: 860px) {
-  .footer { padding-bottom: 124px; }
+  .footer { padding-bottom: 32px; }
   .footer__inner { flex-direction: column; justify-content: center; text-align: center; }
 }
 
@@ -473,6 +473,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   scale: 0; transition: scale 0.5s var(--ease-out);
 }
 .wa-float.is-visible { scale: 1; }
+.wa-float.is-visible.is-tucked { scale: 0; }
 @media (hover: hover) { .wa-float:hover { scale: 1.08; } }
 .wa-float svg { width: 30px; height: 30px; }
 .wa-float::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #22c55e; animation: ring 2.4s var(--ease-out) infinite; }
