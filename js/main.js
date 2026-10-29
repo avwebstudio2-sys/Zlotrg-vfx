@@ -305,13 +305,23 @@ function setupCursor() {
   const setDot = { x: gsap.quickSetter(dot, "x", "px"), y: gsap.quickSetter(dot, "y", "px") };
   const setRing = { x: gsap.quickSetter(ring, "x", "px"), y: gsap.quickSetter(ring, "y", "px") };
 
+  // The page scrollbar sits outside clientWidth/clientHeight: hand it the native cursor
+  const html = document.documentElement;
+  const onScrollbar = (e) => e.clientX >= html.clientWidth || e.clientY >= html.clientHeight;
+  let hidden = false;
+  const hide = () => { hidden = true; root.classList.add("is-hidden"); };
+
   window.addEventListener("mousemove", (e) => {
+    if (onScrollbar(e)) { hide(); return; }
     pos.x = e.clientX; pos.y = e.clientY;
     setDot.x(pos.x); setDot.y(pos.y);
-    root.classList.remove("is-hidden");
+    // coming back from the scrollbar or outside the window: start the ring at the pointer instead of trailing in
+    if (hidden) { hidden = false; ringPos.x = pos.x; ringPos.y = pos.y; root.classList.remove("is-hidden"); }
   }, { passive: true });
-  document.addEventListener("mouseleave", () => root.classList.add("is-hidden"));
-  window.addEventListener("mousedown", () => root.classList.add("is-down"));
+  document.addEventListener("mouseleave", hide);
+  // some browsers stop sending mousemove once the pointer is over the scrollbar; this fires on the way out
+  document.addEventListener("mouseout", (e) => { if (!e.relatedTarget) hide(); });
+  window.addEventListener("mousedown", (e) => { if (onScrollbar(e)) hide(); else root.classList.add("is-down"); });
   window.addEventListener("mouseup", () => root.classList.remove("is-down"));
 
   gsap.ticker.add(() => {
