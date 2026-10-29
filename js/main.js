@@ -141,10 +141,14 @@ function layoutHero() {
   const stacked = stackedMQ.matches;
   const el = hero.el;
   if (stacked) {
-    el.style.removeProperty("--s"); el.style.removeProperty("--sl"); el.style.removeProperty("--st");
     const rimH = hero.rim.clientHeight || 300;
     const k = rimH / 420; // show ~420 design px of sky height, cropped to the screen width
-    paintRim(hero.rim, vw, rimH, k, vw / 2 - PLANET.cx * k);
+    const offX = vw / 2 - PLANET.cx * k;
+    // the glow video reads --s/--sl/--st, so it lines up with the rim painted here (the stage ignores them when stacked)
+    el.style.setProperty("--s", k.toFixed(5));
+    el.style.setProperty("--sl", `${offX.toFixed(2)}px`);
+    el.style.setProperty("--st", "0px");
+    paintRim(hero.rim, vw, rimH, k, offX);
   } else {
     const s = Math.min(vw / STAGE.w, vh / STAGE.h);
     const sl = (vw - STAGE.w * s) / 2, st = (vh - STAGE.h * s) / 2;
@@ -166,23 +170,18 @@ function relayoutHero() {
   layoutT = setTimeout(() => { layoutW = w; layoutH = h; layoutHero(); }, 120);
 }
 
-// Desktop only: load the glow video and fade it in when it can play
+// Load the glow video and fade it in when it can play; the painted rim stays underneath as the fallback
+// (reduced motion, or a phone in low-power mode that refuses to autoplay)
 function setupGlowVideo() {
   const v = hero.video;
   if (reduceMotion) return;
-  const sync = () => {
-    if (stackedMQ.matches) { v.pause(); return; }
-    if (!v.src) { v.src = v.dataset.src; v.preload = "auto"; }
-    v.play().catch(() => {});
-  };
+  v.src = v.dataset.src;
+  v.preload = "auto";
   v.addEventListener("playing", () => v.classList.add("is-ready"), { once: true });
-  stackedMQ.addEventListener("change", sync);
-  // pause while the hero is off screen
+  // play only while the hero is on screen
   new IntersectionObserver(([e]) => {
-    if (!v.src || stackedMQ.matches) return;
     e.isIntersecting ? v.play().catch(() => {}) : v.pause();
   }).observe(hero.el);
-  sync();
 }
 
 /* ---------- Intro (after loader) ---------- */
